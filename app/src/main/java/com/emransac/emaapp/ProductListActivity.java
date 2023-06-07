@@ -57,6 +57,13 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         txtTienda = findViewById(R.id.title);
         searchView = findViewById(R.id.search_view);
 
+        searchView.clearFocus();
+
+        /*
+
+        aqui va ese codigo raro
+         */
+
 
         Bundle bundle = getIntent().getExtras();
         if(bundle !=null){
