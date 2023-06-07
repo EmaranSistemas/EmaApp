@@ -22,7 +22,7 @@ public class StoreAdapter  extends ArrayAdapter<Stores> {
 
     //Nuestro constructor recibe objetos de tipo lista de tiendas
     public StoreAdapter(@NonNull Context context, List<Stores> StoreArray) {
-        super(context, R.layout.store_list);
+        super(context, R.layout.store_list,StoreArray);
         this.context = context;
         this.StoreArray = StoreArray;
     }
