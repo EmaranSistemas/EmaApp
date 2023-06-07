@@ -34,20 +34,21 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="30dp"
+            android:text="R-INTERNACIONALES -EL SUPER"
             android:textStyle="bold"
-            android:text="Tiendas"
             android:textColor="@color/black"
-            android:textSize="12dp" />
+            android:textSize="11dp"
+            />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="italic"
-            android:textSize="12dp"
+            android:textSize="9dp"
             android:textColor="#062BFB"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="5dp"
             android:layout_centerVertical="true"
             android:text="Sucursales" />
     </RelativeLayout>

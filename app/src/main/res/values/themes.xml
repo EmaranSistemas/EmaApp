@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EmaApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#4D7A3A</item>
     </style>
 
     <style name="Theme.EmaApp" parent="Base.Theme.EmaApp" />

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.EmaApp"
         tools:targetApi="31">
         <activity
+            android:name=".ProductListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MercAppActivity"
             android:exported="false" />
         <activity

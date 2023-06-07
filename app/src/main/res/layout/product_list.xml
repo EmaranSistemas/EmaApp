@@ -1,105 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="90dp">
+
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="40dp"
-        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
         android:src="@drawable/ic_launcher_background"
         />
+
+
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true">
 
-
             <TextView
                 android:id="@+id/id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1" />
+                android:layout_width="19dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/rectagle"
+                android:gravity="center_vertical|center"
+                android:text="1"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/nombre"
-                android:layout_width="match_parent"
+                android:layout_width="245dp"
                 android:layout_height="wrap_content"
-                android:text="Nombre del producto bastate grande"
-                android:translationX="10dp" />
+                android:text="PIMIENTA BLANCA MOLIDA FRASCO X 50 GRS"
+                android:textColor="@color/black"
+
+                android:textSize="14dp"
+                android:translationX="2dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
         </LinearLayout>
 
-
-        <EditText
-            android:id="@+id/inventario"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:hint="inventario"
-            android:inputType="number"
-            android:textSize="13sp"
-            android:gravity="center"
-            android:textColor="@color/azul"
-            android:textStyle="bold"
-            android:imeOptions="actionNext"/>
+            android:layout_marginTop="10dp">
 
-        <EditText
-            android:id="@+id/pedido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="10dp"
-            android:hint="pedido"
-            android:textColor="@color/violeta"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:inputType="number"
-            android:textSize="13sp"
-            android:imeOptions="actionNext"
-            />
+            <EditText
+                android:id="@+id/inventario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="inventario"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:textColor="@color/azul"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/stock_anterior"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="20dp"
-            android:textSize="12sp"
-            android:imeOptions="actionNext"
-            android:text="0"
-            android:textColor="@color/red"
-            android:textStyle="bold"
-            />
+            <EditText
+                android:id="@+id/pedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="pedido"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:textColor="@color/violeta"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/stock_actual"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
-            android:layout_marginTop="20dp"
-            android:textSize="12sp"
-            android:text="0"
-            android:textColor="@color/verde"
-            android:textStyle="bold"
-            />
+            <TextView
+                android:id="@+id/stock_anterior"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:imeOptions="actionNext"
+                android:text="0"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="4dp"
-            android:layout_width="88dp"
-            android:layout_height="40dp"
-            android:text="Insertar"
-            android:textSize="11dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/boton_bordes"
-            />
+            <TextView
+                android:id="@+id/stock_actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="0"
+                android:textColor="@color/verde"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:shadowColor="#9F522E"
+                android:text="+"
+                android:textAlignment="center"
+                android:textColorHighlight="#54BC62"
+                android:textColorLink="#6EDC61"
+                android:textSize="17dp"
+                app:icon="@drawable/baseline_add_task_24"
+                app:strokeColor="#954747" />
+
+        </LinearLayout>
+
     </RelativeLayout>
-
 </LinearLayout>
+
+
+    <!--
+    android:layout_marginStart="10dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="4dp"
+    -->
