@@ -3,6 +3,7 @@ package com.emransac.emaapp.Entity;
 public class Product {
     String id,nombre,pedido,inventario,stock,img;
     public Product(){
+        //empty contructor needed
     }
 
     public Product(String id,String nombre,String inventario,String pedido, String stock,String img){

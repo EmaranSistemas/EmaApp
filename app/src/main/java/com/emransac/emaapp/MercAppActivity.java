@@ -50,7 +50,6 @@ public class MercAppActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 ProgressDialog progressDialog = new ProgressDialog(view.getContext());
-
                 CharSequence[] dialogItem = {"Emmel", "Lambramani", "Kosto Tritan", "Kosto Mayorista"};
                 builder.setTitle(employeeArrayList.get(position).getName());
                 builder.setItems(dialogItem, new DialogInterface.OnClickListener() {
