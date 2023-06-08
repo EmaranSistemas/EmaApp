@@ -1,6 +1,7 @@
 package com.emransac.emaapp.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +114,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             String nombre = txtNombre.getText().toString();
             String inventario = txtInventario.getText().toString();
             String pedido = txtPedido.getText().toString();
+
             if (!nombre.isEmpty() && !inventario.isEmpty() && !pedido.isEmpty()) {
+
                 itemClickListener.onItemClick(getAdapterPosition());
                 textInputListener.onTextInputClicked(nombre,inventario,pedido);
                 ProductAdapter.this.removeItem(getAdapterPosition());

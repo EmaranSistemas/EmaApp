@@ -1,12 +1,17 @@
 package com.emransac.emaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +24,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.emransac.emaapp.Adapters.ProductAdapter;
 import com.emransac.emaapp.Entity.Product;
+import com.emransac.emaapp.Ubication.GpsTracker;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,14 +40,26 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     private SearchView searchView;
     public static ArrayList<Product> productArrayList = new ArrayList<>();
     ArrayList<String> sucursales = new ArrayList<>();
-    TextView txtTienda;
+    TextView txtTienda,txt_count,txt_total;
 
     String sucursal_name;
+    int suma;
+
+    GpsTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+
+        try { //Request Permission if not permitted
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // supermercados franco productos-sucursales 0 - 3
         sucursales.add("https://emaransac.com/android/productos_emmel.php");
         sucursales.add("https://emaransac.com/android/productos_lambramani.php");
@@ -55,9 +75,29 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         sucursales.add("https://emaransac.com/android/productos_super.php");
 
         txtTienda = findViewById(R.id.title);
-        searchView = findViewById(R.id.search_view);
+        txt_count = findViewById(R.id.counter);
+        txt_total = findViewById(R.id.counter_now);
 
+        searchView = findViewById(R.id.search_view);
         searchView.clearFocus();
+
+        FloatingActionButton btn1 = findViewById(R.id.btn1);
+        FloatingActionButton btn2 = findViewById(R.id.btn2);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarDetalle();
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanner();
+            }
+        });
+
 
         /*
 
@@ -123,6 +163,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                 Log.d("Error el seleccionar la tienda ",strSinEspacios);
             }
             txtTienda.setText("Productos "+sucursal_);
+
             recyclerView = findViewById(R.id.recycler_view);
             adapter = new ProductAdapter(this,productArrayList,this,this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -138,8 +179,24 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
 
     @Override
     public void onTextInputClicked(String nombre, String inventario, String pedido) {
+        try { //Request Permission if not permitted
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d("tienda: ", sucursal_name);
-        Toast.makeText(ProductListActivity.this,"N: "+nombre+" I: "+inventario+" P: "+pedido + "count: "+recyclerView.getAdapter().getItemCount(),Toast.LENGTH_SHORT).show();
+        String a_lat = "0";
+        String a_lon = "0";
+        a_lat = getLocs(1);
+        a_lon = getLocs(2);
+        String count = suma+1-recyclerView.getAdapter().getItemCount()+"";
+
+        //Toast.makeText(this, "Lat: "+a_lat+" Log: "+a_lon, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(ProductListActivity.this," I: "+inventario+" P: "+pedido + "count: "+recyclerView.getAdapter().getItemCount()+"Lat: "+a_lat+" Log: "+a_lon,Toast.LENGTH_SHORT).show();
+        Log.d("INSERTAR","Suc: "+sucursal_name+" "+"Prod: "+nombre+" Inv: "+inventario+" Ped: "+pedido +" Lat: "+a_lat+" Log: "+a_lon);
+        txt_count.setText(count);
     }
 
     public void retrieveData(String url){
@@ -154,7 +211,9 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                             String exito = jsonObject.getString("exito");
                             JSONArray jsonArray = jsonObject.getJSONArray("datos");
                             if(exito.equals("1")){
-                                Log.d("SIZE: ", String.valueOf(jsonArray.length()));
+                                //Log.d("SIZE: ", String.valueOf(jsonArray.length()));
+                                txt_total.setText(String.valueOf(jsonArray.length()));
+                                suma = jsonArray.length();
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String id = object.getString("id_producto");
@@ -179,6 +238,37 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+    public void mostrarDetalle() {
+        String a_lat = "0";
+        String a_lon = "0";
+        a_lat = getLocs(1);
+        a_lon = getLocs(2);
+        Toast.makeText(this, "Lat: "+a_lat+" Log: "+a_lon, Toast.LENGTH_SHORT).show();
+    }
+    public void scanner() {
+        Toast.makeText(this, "Este es el scanner", Toast.LENGTH_SHORT).show();
+    }
+
+    public String getLocs(int ID) { //Get Current Lat and Lon 1=lat, 2=lon
+        String asd_lat = "";
+        String asd_lon = "";
+        gpsTracker = new GpsTracker(ProductListActivity.this);
+        if (gpsTracker.canGetLocation()) {
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+            asd_lat = String.valueOf(latitude);
+            asd_lon = String.valueOf(longitude);
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
+        if (ID == 1) {
+            return asd_lat;
+        } else if (ID == 2) {
+            return asd_lon;
+        } else {
+            return "0";
+        }
     }
 }
 

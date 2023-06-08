@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_launcher_background"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/id"
+                android:layout_width="19dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/rectagle"
+                android:gravity="center_vertical|center"
+                android:text="1"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/producto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PIMIENTA BLANCA MOLIDA FRASCO X 5SAZ.COMPL C/AJI "
+                android:textColor="@color/black"
+
+                android:textSize="14dp"
+                android:translationX="2dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+
+            <TextView
+                android:id="@+id/tienda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:text="Emmel"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+
+                />
+
+            <TextView
+                android:id="@+id/fecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:text="2023-05-17"
+                android:textColor="@color/violeta"
+                android:textSize="13sp"
+                 />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/diferencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:imeOptions="actionNext"
+            android:text="70"
+            android:layout_marginEnd="70dp"
+            android:textColor="#A10404"
+            android:textSize="10sp"
+            android:layout_alignParentRight="true"
+            />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="70dp"
+            android:imeOptions="actionNext"
+            android:text="|"
+            android:textColor="#13C6DD"
+            android:textSize="30sp"
+
+            android:translationX="15dp" />
+
+
+        <TextView
+            android:id="@+id/stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+            android:text="80"
+            android:textColor="#042203"
+            android:textSize="30sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            />
+
+    </RelativeLayout>
+</LinearLayout>
+
+
+    <!--
+    android:layout_marginStart="10dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="4dp"
+    -->

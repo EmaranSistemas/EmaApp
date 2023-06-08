@@ -19,4 +19,5 @@
     <color name="verde">#0F9706</color>
     <color name="azul">#1E8FE6</color>
     <color name="violeta">#7433E6</color>
+    <color name="selected_color">#ECECEC</color>
 </resources>

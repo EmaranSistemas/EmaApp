@@ -7,6 +7,13 @@
     android:padding="10dp"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Register" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,4 +24,5 @@
         android:layout_alignParentRight="true"
         android:layout_margin="30dp"
         />
+
 </RelativeLayout>
