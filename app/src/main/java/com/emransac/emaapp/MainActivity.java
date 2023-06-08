@@ -1,38 +1,29 @@
 package com.emransac.emaapp;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.emransac.emaapp.Adapters.StoreAdapter;
-import com.emransac.emaapp.Entity.Stores;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.emransac.emaapp.Adapters.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    ChipNavigationBar  chipNavigationBar;
+
+    RelativeLayout layout;
 
 
     @Override
@@ -40,8 +31,51 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
     }
     public void mercapp(View view) {
         startActivity(new Intent(getApplicationContext(),MercAppActivity.class));
+    }
+
+    private void CreatepopUpwindow() {
+        LayoutInflater inflater= (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popUpView=inflater.inflate(R.layout.mainpopup,null);
+
+        int width= ViewGroup.LayoutParams.MATCH_PARENT;
+        int height=ViewGroup.LayoutParams.MATCH_PARENT;
+        boolean focusable=true;
+        PopupWindow popupWindow=new PopupWindow(popUpView,width,height,focusable);
+        layout.post(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(layout, Gravity.BOTTOM,0,0);
+
+            }
+        });
+        TextView Skip ,Gotit;
+        Skip=popUpView.findViewById(R.id.Skip);
+        Gotit=popUpView.findViewById(R.id.Gotit);
+        Skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        Gotit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // write code anything you want
+            }
+        });
+        // and if you want to close popup when touch Screen
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 }

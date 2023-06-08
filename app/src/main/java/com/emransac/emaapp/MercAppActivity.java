@@ -2,17 +2,21 @@ package com.emransac.emaapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,29 +26,51 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.emransac.emaapp.Adapters.StoreAdapter;
+import com.emransac.emaapp.Adapters.ViewPagerAdapter;
 import com.emransac.emaapp.Entity.Stores;
+import com.emransac.emaapp.Ubication.GpsTracker;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MercAppActivity extends AppCompatActivity {
     ListView listView;
     StoreAdapter adapter;
+
     public static ArrayList<Stores> TiendasArraylist = new ArrayList<>();
     String url = "https://emaransac.com/android/mostrar_tiendas.php";
     Stores stores;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merc_app);
+
+        /*
+        GPS TRACKER
+         */
+
         listView = findViewById(R.id.myListView);
         adapter = new StoreAdapter(this, TiendasArraylist);
         listView.setAdapter(adapter);
+
+
+        FloatingActionButton btn1 = findViewById(R.id.summaryList);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MercAppActivity.this, SummaryActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -262,6 +288,7 @@ public class MercAppActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
     }
+
 
 
 }

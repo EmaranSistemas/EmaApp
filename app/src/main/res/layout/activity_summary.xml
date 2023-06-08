@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ProductListActivity">
+    tools:context=".SummaryActivity">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:text="/"
             android:textSize="12sp"
             android:textStyle="bold"
-             />
+            />
 
         <TextView
             android:id="@+id/counter_now"
@@ -65,12 +65,12 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btn1"
+                android:id="@+id/update_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
 
-                android:src="@drawable/baseline_app_mydetails_24"
+                android:src="@drawable/baseline_update_24"
                 android:translationX="40dp"
                 app:layout_anchor="@id/search_view"
                 app:layout_anchorGravity="top|end" />
@@ -86,7 +86,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btn2"
+                android:id="@+id/btn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -101,7 +101,7 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_view_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="90dp" />
@@ -110,6 +110,3 @@
     </RelativeLayout>
 
 </LinearLayout>
-
-
-<!-- resta nuevo pasaso -->
