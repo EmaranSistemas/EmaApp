@@ -77,6 +77,8 @@ public class MercAppActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
+                //Toast.makeText(MercAppActivity.this, TiendasArraylist.get(position).getName(), Toast.LENGTH_SHORT).show();
+
                 if (TiendasArraylist.get(position).getName().equals("FRANCO SUPERMERCADOS")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     ProgressDialog progressDialog = new ProgressDialog(view.getContext());
@@ -89,24 +91,28 @@ public class MercAppActivity extends AppCompatActivity {
                                 case 0:
                                     //Toast.makeText(MercAppActivity.this,"Emmel", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent.putExtra("sucursal", dialogItem[0].toString());
                                     intent.putExtra("id", 0);
                                     startActivity(intent);
                                     break;
                                 case 1:
                                     Intent intent1 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent1.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent1.putExtra("sucursal",dialogItem[1].toString());
                                     intent1.putExtra("id", 1);
                                     startActivity(intent1);
                                     break;
                                 case 2:
                                     Intent intent2 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent2.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent2.putExtra("sucursal",dialogItem[2].toString());
                                     intent2.putExtra("id",2);
                                     startActivity(intent2);
                                     break;
                                 case 3:
                                     Intent intent3 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent3.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent3.putExtra("sucursal",dialogItem[3].toString());
                                     intent3.putExtra("id",3);
                                     startActivity(intent3);
@@ -129,12 +135,14 @@ public class MercAppActivity extends AppCompatActivity {
                                 case 0:
                                     //Toast.makeText(MercAppActivity.this,"Emmel", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent.putExtra("sucursal",dialogItem[0].toString());
                                     intent.putExtra("id",4);
                                     startActivity(intent);
                                     break;
                                 case 1:
                                     Intent intent1 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent1.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent1.putExtra("sucursal",dialogItem[1].toString());
                                     intent1.putExtra("id",4);
                                     startActivity(intent1);
@@ -156,18 +164,21 @@ public class MercAppActivity extends AppCompatActivity {
                                 case 0:
                                     //Toast.makeText(MercAppActivity.this,"Emmel", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent.putExtra("sucursal",dialogItem[0].toString());
                                     intent.putExtra("id",5);
                                     startActivity(intent);
                                     break;
                                 case 1:
                                     Intent intent1 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent1.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent1.putExtra("sucursal",dialogItem[1].toString());
                                     intent1.putExtra("id",5);
                                     startActivity(intent1);
                                     break;
                                 case 2:
                                     Intent intent2 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent2.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent2.putExtra("sucursal",dialogItem[2].toString());
                                     intent2.putExtra("id",5);
                                     startActivity(intent2);
@@ -189,24 +200,28 @@ public class MercAppActivity extends AppCompatActivity {
                                 case 0:
                                     //Toast.makeText(MercAppActivity.this,"Emmel", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent.putExtra("sucursal",dialogItem[0].toString());
                                     intent.putExtra("id",6);
                                     startActivity(intent);
                                     break;
                                 case 1:
                                     Intent intent1 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent1.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent1.putExtra("sucursal",dialogItem[1].toString());
                                     intent1.putExtra("id",6);
                                     startActivity(intent1);
                                     break;
                                 case 2:
                                     Intent intent2 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent2.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent2.putExtra("sucursal",dialogItem[2].toString());
                                     intent2.putExtra("id",6);
                                     startActivity(intent2);
                                     break;
                                 case 3:
                                     Intent intent3 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent3.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent3.putExtra("sucursal",dialogItem[3].toString());
                                     intent3.putExtra("id",6);
                                     startActivity(intent3);
@@ -228,12 +243,14 @@ public class MercAppActivity extends AppCompatActivity {
                                 case 0:
                                     //Toast.makeText(MercAppActivity.this,"Emmel", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent.putExtra("sucursal",dialogItem[0].toString());
                                     intent.putExtra("id",7);
                                     startActivity(intent);
                                     break;
                                 case 1:
                                     Intent intent1 = new Intent(MercAppActivity.this, ProductListActivity.class);
+                                    intent1.putExtra("tienda", TiendasArraylist.get(position).getName());
                                     intent1.putExtra("sucursal",dialogItem[1].toString());
                                     intent1.putExtra("id",7);
                                     startActivity(intent1);

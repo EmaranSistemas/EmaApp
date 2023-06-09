@@ -1,18 +1,19 @@
 package com.emransac.emaapp.Entity;
 
 public class Product {
-    String id,nombre,pedido,inventario,stock,img;
+    String id,nombre,pedido,inventario,cod_ref,img,cod_barras;
     public Product(){
         //empty contructor needed
     }
 
-    public Product(String id,String nombre,String inventario,String pedido, String stock,String img){
+    public Product(String id,String cod_ref,String cod_barras, String nombre,String inventario,String pedido,String img){
         this.id = id;
         this.nombre = nombre;
         this.pedido = pedido;
         this.inventario = inventario;
         this.img = img;
-        this.stock = stock;
+        this.cod_ref = cod_ref;
+        this.cod_barras = cod_barras;
     }
 
     public String getId(){
@@ -31,8 +32,12 @@ public class Product {
         return pedido;
     }
 
-    public String getStock(){
-        return stock;
+    public String getCod_ref(){
+        return cod_ref;
+    }
+
+    public String getCod_barras(){
+        return cod_barras;
     }
 
     public String getImg(){
@@ -46,8 +51,8 @@ public class Product {
     public String setNombre(){
         return this.nombre;
     }
-    public String setStock(){
-        return this.stock;
+    public String setCod_ref(){
+        return this.cod_ref;
     }
     public String setImg(){
         return this.img;

@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="90dp">
-
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_launcher_background"
-        />
-
-
-
-
+        android:src="@drawable/ic_launcher_background" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        >
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,12 +38,10 @@
                 android:layout_height="wrap_content"
                 android:text="PIMIENTA BLANCA MOLIDA FRASCO X 50 GRS"
                 android:textColor="@color/black"
-
                 android:textSize="14dp"
                 android:translationX="2dp"
                 android:maxLines="2"
-                android:ellipsize="end"
-                />
+                android:ellipsize="end" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,11 +49,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
+            <TextView
+                android:id="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Código"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cod_barras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-40dp"
+                android:layout_marginTop="16dp"
+                android:imeOptions="actionNext"
+                android:text="7750552000081"
+                android:textColor="@color/azul"
+                android:textSize="7sp"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/inventario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:hint="inventario"
@@ -76,7 +89,7 @@
                 android:id="@+id/pedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:hint="pedido"
@@ -86,35 +99,12 @@
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/stock_anterior"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:imeOptions="actionNext"
-                android:text="0"
-                android:textColor="@color/red"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/stock_actual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="0"
-                android:textColor="@color/verde"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:shadowColor="#9F522E"
                 android:text="+"
@@ -129,10 +119,3 @@
 
     </RelativeLayout>
 </LinearLayout>
-
-
-    <!--
-    android:layout_marginStart="10dp"
-    android:layout_marginLeft="3dp"
-    android:layout_marginRight="4dp"
-    -->

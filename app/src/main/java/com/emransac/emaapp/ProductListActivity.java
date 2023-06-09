@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +30,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 public class ProductListActivity extends AppCompatActivity implements ProductAdapter.itemClickListener, ProductAdapter.TextInputListener {
     private RecyclerView recyclerView;
     private ProductAdapter adapter;
@@ -40,9 +43,11 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     private SearchView searchView;
     public static ArrayList<Product> productArrayList = new ArrayList<>();
     ArrayList<String> sucursales = new ArrayList<>();
+    ArrayList<String> ImageList = new ArrayList<>();
     TextView txtTienda,txt_count,txt_total;
 
     String sucursal_name;
+    String tienda_name;
     int suma;
 
     GpsTracker gpsTracker;
@@ -108,11 +113,13 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         Bundle bundle = getIntent().getExtras();
         if(bundle !=null){
             //retrieveProduct(url2);
+            String tienda = bundle.getString("tienda");
             String sucursal = bundle.getString("sucursal");
             String sucursal_ = sucursal.replace("»", "");
             Toast.makeText(ProductListActivity.this,sucursal_,Toast.LENGTH_LONG).show();
             String strSinEspacios = sucursal_.replaceAll("\\s+", "");
             sucursal_name = strSinEspacios;
+            tienda_name = tienda;
             //productArrayList.clear();
             if(strSinEspacios.equals("Emmel")){
                 retrieveData(sucursales.get(0));
@@ -178,7 +185,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     }
 
     @Override
-    public void onTextInputClicked(String nombre, String inventario, String pedido) {
+    public void onTextInputClicked(String id,String nombre, String inventario, String pedido, String img) {
         try { //Request Permission if not permitted
             if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
@@ -192,10 +199,11 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         a_lat = getLocs(1);
         a_lon = getLocs(2);
         String count = suma+1-recyclerView.getAdapter().getItemCount()+"";
+        String ipAddress = getDeviceIpAddress();
 
         //Toast.makeText(this, "Lat: "+a_lat+" Log: "+a_lon, Toast.LENGTH_SHORT).show();
         //Toast.makeText(ProductListActivity.this," I: "+inventario+" P: "+pedido + "count: "+recyclerView.getAdapter().getItemCount()+"Lat: "+a_lat+" Log: "+a_lon,Toast.LENGTH_SHORT).show();
-        Log.d("INSERTAR","Suc: "+sucursal_name+" "+"Prod: "+nombre+" Inv: "+inventario+" Ped: "+pedido +" Lat: "+a_lat+" Log: "+a_lon);
+        Log.d("INSERTAR: tienda",tienda_name+" " + "Suc: "+sucursal_name+" "+"Prod: "+nombre+" Inv: "+inventario+" Ped: "+pedido +" Log: "+a_lon+" Lat: "+a_lat+"ip "+ipAddress+" img->"+id);
         txt_count.setText(count);
     }
 
@@ -206,6 +214,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                     public void onResponse(String response) {
 
                         productArrayList.clear();
+                        ImageList.clear();
                         try{
                             JSONObject jsonObject = new JSONObject(response);
                             String exito = jsonObject.getString("exito");
@@ -220,7 +229,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                                     String nombre = object.getString("nombre");
                                     String imagen = object.getString("IMAGENES");
                                     Log.d("Retrival "," id: "+id+ "Nombre: "+nombre +"img: "+imagen);
-                                    producto= new Product(id,nombre,"","","",imagen);
+                                    ImageList.add(imagen);
+                                    producto= new Product(id,"ref","7750552000081",nombre,"","",imagen);
                                     productArrayList.add(producto);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -269,6 +279,25 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         } else {
             return "0";
         }
+    }
+
+    private String getDeviceIpAddress() {
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+                while (inetAddresses.hasMoreElements()) {
+                    InetAddress inetAddress = inetAddresses.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress.getAddress().length == 4) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

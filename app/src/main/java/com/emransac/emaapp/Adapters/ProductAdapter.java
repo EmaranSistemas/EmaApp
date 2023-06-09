@@ -1,7 +1,6 @@
 package com.emransac.emaapp.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Product producto = productoArrayList.get(position);
 
         holder.txtid.setText(producto.getId());
+        holder.txtCodBarras.setText(producto.getCod_barras());
         holder.txtNombre.setText(producto.getNombre());
         holder.txtInventario.setText(producto.getInventario());
         holder.txtPedido.setText(producto.getPedido());
@@ -85,6 +85,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtid;
+
+        TextView txtCodigo;
+        TextView txtCodBarras;
         TextView txtNombre;
         TextView txtInventario;
         TextView txtPedido;
@@ -97,9 +100,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             super(itemView);
 
             txtid = itemView.findViewById(R.id.id);
+            txtCodBarras = itemView.findViewById(R.id.cod_barras);
             txtNombre = itemView.findViewById(R.id.nombre);
             txtInventario = itemView.findViewById(R.id.inventario);
             txtPedido = itemView.findViewById(R.id.pedido);
+
             imageView = itemView.findViewById(R.id.imageView);
             button = itemView.findViewById(R.id.button);
 
@@ -114,11 +119,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             String nombre = txtNombre.getText().toString();
             String inventario = txtInventario.getText().toString();
             String pedido = txtPedido.getText().toString();
+            String img = imageView.toString();
+            String id = txtid.getText().toString();
 
             if (!nombre.isEmpty() && !inventario.isEmpty() && !pedido.isEmpty()) {
 
                 itemClickListener.onItemClick(getAdapterPosition());
-                textInputListener.onTextInputClicked(nombre,inventario,pedido);
+                textInputListener.onTextInputClicked( id,nombre,inventario,pedido,img);
                 ProductAdapter.this.removeItem(getAdapterPosition());
             } else {
                 if(nombre.isEmpty()){
@@ -145,7 +152,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public interface TextInputListener {
-        void onTextInputClicked(String nombre, String inventario, String pedido);
+        void onTextInputClicked(String id,String nombre, String inventario, String pedido, String img);
     }
 
 }

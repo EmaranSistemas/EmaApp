@@ -57,8 +57,8 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.ViewHold
         holder.txtid.setText(summary.getId());
         holder.txtProducto.setText(summary.getProducto());
         holder.txtTienda.setText(summary.getTienda());
-        holder.txtDiferencia.setText(summary.getDiferencia());
-        holder.txtStock.setText(summary.getStock());
+        holder.txtPedido.setText(summary.getPedido());
+        holder.txtInventario.setText(summary.getInventario());
         holder.fecha.setText(summary.getFecha());
 
         Glide.with(context)
@@ -94,8 +94,8 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.ViewHold
         TextView txtid;
         TextView txtTienda;
         TextView txtProducto;
-        TextView txtDiferencia;
-        TextView txtStock;
+        TextView txtPedido;
+        TextView txtInventario;
         TextView fecha;
         ImageView imageView;
 
@@ -105,8 +105,9 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.ViewHold
             txtid = itemView.findViewById(R.id.id);
             txtTienda = itemView.findViewById(R.id.tienda);
             txtProducto = itemView.findViewById(R.id.producto);
-            txtDiferencia = itemView.findViewById(R.id.diferencia);
-            txtStock = itemView.findViewById(R.id.stock);
+            txtPedido = itemView.findViewById(R.id.diferencia);
+            txtInventario = itemView.findViewById(R.id.stock);
+
             fecha = itemView.findViewById(R.id.fecha);
             imageView = itemView.findViewById(R.id.imageView);
         }
