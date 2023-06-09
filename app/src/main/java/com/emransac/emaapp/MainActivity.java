@@ -7,7 +7,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnRegister; // Set Button
+    private Button btnRegister; // no button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
