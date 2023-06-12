@@ -288,12 +288,15 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String id = object.getString("id_producto");
+                                    String cod_ref = object.getString("cod_ref");
                                     String cod_ean = object.getString("cod_ean");
                                     String nombre = object.getString("nombre");
                                     String imagen = object.getString("IMAGENES");
                                     Log.d("Retrival "," id: "+id+ "EAN "+cod_ean+"Nombre: "+nombre +"img: "+imagen);
                                     ImageList.add(imagen);
-                                    producto= new Product(id,"ref","7750552000081",nombre,"","",imagen);
+                                    if(cod_ean.isEmpty())
+                                        cod_ean = "0000000000000";
+                                    producto= new Product(id,cod_ref,cod_ean,nombre,"","",imagen);
                                     productArrayList.add(producto);
                                     adapter.notifyDataSetChanged();
                                 }

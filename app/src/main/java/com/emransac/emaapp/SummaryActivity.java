@@ -167,13 +167,14 @@ public class SummaryActivity extends AppCompatActivity {
                                     String img = object.getString("imagen");
                                     String id = object.getString("id");
                                     String tienda = object.getString("tienda");
+                                    String sucursal = object.getString("sucursal");
                                     String producto = object.getString("producto");
                                     String inventario = object.getString("inventario");
                                     String pedido = object.getString("pedido");
                                     String fecha_string = object.getString("fecha");
 
                                     Log.d("Retrival ", img + " " + id + " " + tienda + " " + producto + " " + inventario + " " + pedido + " " + fecha_string);
-                                    summary = new Summary(img, id, tienda, producto, inventario, pedido, fecha_string);
+                                    summary = new Summary(img, id, tienda+"/"+sucursal, producto, inventario, pedido, fecha_string);
                                     SumaryArrayList.add(summary);
                                 }
                                 summaryAdapter.notifyDataSetChanged(); // Notificar cambios en el adaptador después de agregar los elementos
