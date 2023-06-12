@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,9 +37,12 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ProductListActivity extends AppCompatActivity implements ProductAdapter.itemClickListener, ProductAdapter.TextInputListener {
+public class ProductListActivity extends AppCompatActivity implements ProductAdapter.itemClickListener, ProductAdapter.TextInputListener ,SearchView.OnQueryTextListener{
     private RecyclerView recyclerView;
+
     private ProductAdapter adapter;
     private Product producto;
 
@@ -64,6 +70,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
 
         // supermercados franco productos-sucursales 0 - 3
         sucursales.add("https://emaransac.com/android/productos_emmel.php");
@@ -102,6 +110,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                 scanner();
             }
         });
+
+        searchView.setOnQueryTextListener(this);
 
 
         /*
@@ -204,8 +214,60 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         //Toast.makeText(this, "Lat: "+a_lat+" Log: "+a_lon, Toast.LENGTH_SHORT).show();
         //Toast.makeText(ProductListActivity.this," I: "+inventario+" P: "+pedido + "count: "+recyclerView.getAdapter().getItemCount()+"Lat: "+a_lat+" Log: "+a_lon,Toast.LENGTH_SHORT).show();
         Log.d("INSERTAR: tienda",tienda_name+" " + "Suc: "+sucursal_name+" "+"Prod: "+nombre+" Inv: "+inventario+" Ped: "+pedido +" Log: "+a_lon+" Lat: "+a_lat+"ip "+ipAddress+" img->"+id);
+
+        insertar("cod_ean",tienda_name,sucursal_name,nombre,inventario,pedido,a_lon,a_lat,ipAddress,id);
         txt_count.setText(count);
     }
+
+
+
+    private void insertar(String cod_ean, String tienda, String sucursal, String producto, String inventario, String pedido, String lon, String lat, String ip, String img_id) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando...");
+        progressDialog.show();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://emaransac.com/android/insertar_reporte.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equalsIgnoreCase("Se guardo correctamente.")) {
+                            Toast.makeText(ProductListActivity.this, "Se guardo correctamente.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ProductListActivity.this, response, Toast.LENGTH_SHORT).show();
+                        }
+                        progressDialog.dismiss();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProductListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("cod_ean", cod_ean);
+                params.put("tienda", tienda);
+                params.put("sucursal", sucursal);
+                params.put("producto", producto);
+                params.put("inventario", inventario);
+                params.put("pedido", pedido);
+                params.put("lon", lon);
+                params.put("lat", lat);
+                params.put("ip", ip);
+                params.put("img_id", img_id);
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ProductListActivity.this);
+        requestQueue.add(request);
+    }
+
+
 
     public void retrieveData(String url){
         StringRequest request = new StringRequest(Request.Method.POST, url,
@@ -226,9 +288,10 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String id = object.getString("id_producto");
+                                    String cod_ean = object.getString("cod_ean");
                                     String nombre = object.getString("nombre");
                                     String imagen = object.getString("IMAGENES");
-                                    Log.d("Retrival "," id: "+id+ "Nombre: "+nombre +"img: "+imagen);
+                                    Log.d("Retrival "," id: "+id+ "EAN "+cod_ean+"Nombre: "+nombre +"img: "+imagen);
                                     ImageList.add(imagen);
                                     producto= new Product(id,"ref","7750552000081",nombre,"","",imagen);
                                     productArrayList.add(producto);
@@ -298,6 +361,18 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        //adapter.filtrado(s);
+        Toast.makeText(this, "En la siguiente version: "+s, Toast.LENGTH_SHORT).show();
+        return false;
     }
 }
 

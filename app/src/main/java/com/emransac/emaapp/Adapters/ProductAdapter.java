@@ -17,10 +17,13 @@ import com.emransac.emaapp.Entity.Product;
 import com.emransac.emaapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<Product> productoArrayList;
+    private final ArrayList<Product> OriginList;
     private itemClickListener itemClickListener;
     private TextInputListener textInputListener; // Agregado el campo TextInputListener
 
@@ -29,6 +32,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.productoArrayList = productoArrayList;
         this.itemClickListener = itemClickListener;
         this.textInputListener = textInputListener; // Asignado el TextInputListener
+        OriginList = new ArrayList<>(productoArrayList);
+        OriginList.addAll(productoArrayList);
     }
 
     @NonNull
@@ -69,6 +74,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 }
             }
         });
+    }
+
+    public void filtrado(String txt){
+
+        int longitud = txt.length();
+        if(longitud == 0){
+            productoArrayList.clear();
+            productoArrayList.addAll(OriginList);
+        }else{
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                List<Product> collect = productoArrayList.stream().filter(i -> i.getNombre().toLowerCase().
+                        contains(txt.toLowerCase())).collect(Collectors.toList());
+                productoArrayList.clear();
+                productoArrayList.addAll(collect);
+            }else{
+                productoArrayList.clear();
+                for(Product i : OriginList){
+                    if(i.getNombre().toLowerCase().contains(txt.toLowerCase())){
+                        productoArrayList.add(i);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
