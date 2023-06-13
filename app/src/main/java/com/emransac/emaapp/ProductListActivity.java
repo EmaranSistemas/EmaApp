@@ -195,7 +195,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     }
 
     @Override
-    public void onTextInputClicked(String id,String nombre, String inventario, String pedido, String img) {
+    public void onTextInputClicked(String cod_ref,String id,String nombre, String inventario, String pedido, String img) {
         try { //Request Permission if not permitted
             if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
@@ -213,15 +213,15 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
 
         //Toast.makeText(this, "Lat: "+a_lat+" Log: "+a_lon, Toast.LENGTH_SHORT).show();
         //Toast.makeText(ProductListActivity.this," I: "+inventario+" P: "+pedido + "count: "+recyclerView.getAdapter().getItemCount()+"Lat: "+a_lat+" Log: "+a_lon,Toast.LENGTH_SHORT).show();
-        Log.d("INSERTAR: tienda",tienda_name+" " + "Suc: "+sucursal_name+" "+"Prod: "+nombre+" Inv: "+inventario+" Ped: "+pedido +" Log: "+a_lon+" Lat: "+a_lat+"ip "+ipAddress+" img->"+id);
+        Log.d("INSERTAR: tienda","cod_ref: "+cod_ref+" tienda:"+tienda_name+" " + "Suc: "+sucursal_name+" "+"Prod: "+nombre+" Inv: "+inventario+" Ped: "+pedido +" Log: "+a_lon+" Lat: "+a_lat+"ip "+ipAddress+" img->"+id);
 
-        insertar("cod_ean",tienda_name,sucursal_name,nombre,inventario,pedido,a_lon,a_lat,ipAddress,id);
+        insertar(id,"ean",tienda_name,sucursal_name,nombre,inventario,pedido,a_lon,a_lat,ipAddress,id);
         txt_count.setText(count);
     }
 
 
 
-    private void insertar(String cod_ean, String tienda, String sucursal, String producto, String inventario, String pedido, String lon, String lat, String ip, String img_id) {
+    private void insertar(String cod_ref,String cod_ean, String tienda, String sucursal, String producto, String inventario, String pedido, String lon, String lat, String ip, String img_id) {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Cargando...");
@@ -248,6 +248,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("cod_ref", cod_ref);
                 params.put("cod_ean", cod_ean);
                 params.put("tienda", tienda);
                 params.put("sucursal", sucursal);
@@ -292,11 +293,11 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                                     String cod_ean = object.getString("cod_ean");
                                     String nombre = object.getString("nombre");
                                     String imagen = object.getString("IMAGENES");
-                                    Log.d("Retrival "," id: "+id+ "EAN "+cod_ean+"Nombre: "+nombre +"img: "+imagen);
+                                    Log.d("Retrival ","cod_ref"+cod_ref+" id: "+id+ "EAN "+cod_ean+"Nombre: "+nombre +"img: "+imagen);
                                     ImageList.add(imagen);
                                     if(cod_ean.isEmpty())
                                         cod_ean = "0000000000000";
-                                    producto= new Product(id,cod_ref,cod_ean,nombre,"","",imagen);
+                                    producto= new Product(cod_ref,id,cod_ean,nombre,"","",imagen);
                                     productArrayList.add(producto);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -373,19 +374,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
 
     @Override
     public boolean onQueryTextChange(String s) {
-        //adapter.filtrado(s);
-        Toast.makeText(this, "En la siguiente version: "+s, Toast.LENGTH_SHORT).show();
+        adapter.filtrado(s);
+        //Toast.makeText(this, "En la siguiente version: "+s, Toast.LENGTH_SHORT).show();
         return false;
     }
 }
-
-        /*
-
-         //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-
-
-        for(int i=0;i<5;i++){
-            producto= new Product(Integer.toString(i),"Canela molida para sobres"+i,"","","","https://sibarita.pe/wp-content/uploads/2021/07/SIB008.jpg");
-            productArrayList.add(producto);
-        }
-*/

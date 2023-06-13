@@ -1,6 +1,9 @@
 package com.emransac.emaapp.Adapters;
 
 import android.content.Context;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Product producto = productoArrayList.get(position);
 
         holder.txtid.setText(producto.getId());
+        //holder.txtCodRef.setText(producto.getCod_ref());
         holder.txtCodBarras.setText(producto.getCod_barras());
         holder.txtNombre.setText(producto.getNombre());
         holder.txtInventario.setText(producto.getInventario());
@@ -56,6 +60,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Glide.with(context)
                 .load(producto.getImg())
                 .into(holder.imageView);
+
+        holder.txtPedido.setText("0");
 
         holder.txtInventario.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -112,10 +118,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         TextView txtid;
-
-        TextView txtCodigo;
+        TextView txtCodRef;
         TextView txtCodBarras;
         TextView txtNombre;
         TextView txtInventario;
@@ -129,10 +133,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             super(itemView);
 
             txtid = itemView.findViewById(R.id.id);
+            txtCodRef = itemView.findViewById(R.id.cod_ref);
             txtCodBarras = itemView.findViewById(R.id.cod_barras);
             txtNombre = itemView.findViewById(R.id.nombre);
             txtInventario = itemView.findViewById(R.id.inventario);
             txtPedido = itemView.findViewById(R.id.pedido);
+
 
             imageView = itemView.findViewById(R.id.imageView);
             button = itemView.findViewById(R.id.button);
@@ -150,30 +156,34 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             String pedido = txtPedido.getText().toString();
             String img = imageView.toString();
             String id = txtid.getText().toString();
+            String cod_ref = txtCodRef.getText().toString(); // Obtener el valor del TextView txtCodRef
 
-            if (!nombre.isEmpty() && !inventario.isEmpty() && !pedido.isEmpty()) {
 
-                itemClickListener.onItemClick(getAdapterPosition());
-                textInputListener.onTextInputClicked( id,nombre,inventario,pedido,img);
-                ProductAdapter.this.removeItem(getAdapterPosition());
+            boolean isInternetAvailable = isInternetAvailable(); // Verificar disponibilidad de internet
+            boolean isGpsEnabled = isGpsEnabled(); // Verificar si el GPS está activado
+
+            if (isInternetAvailable && isGpsEnabled) {
+                if (!nombre.isEmpty() && !inventario.isEmpty() && !pedido.isEmpty()) {
+                    itemClickListener.onItemClick(getAdapterPosition());
+                    textInputListener.onTextInputClicked(cod_ref,id, nombre, inventario, pedido, img);
+                    ProductAdapter.this.removeItem(getAdapterPosition());
+                } else {
+                    if (nombre.isEmpty()) {
+                        Toast.makeText(context, "Ingrese producto", Toast.LENGTH_SHORT).show();
+                    } else if (inventario.isEmpty()) {
+                        Toast.makeText(context, "Ingrese inventario", Toast.LENGTH_SHORT).show();
+                    } else if (pedido.isEmpty()) {
+                        Toast.makeText(context, "Ingrese pedido", Toast.LENGTH_SHORT).show();
+                    }
+                }
             } else {
-                if(nombre.isEmpty()){
-                    Toast.makeText(context, "Ingrese nombre", Toast.LENGTH_SHORT).show();
-                    return;
+                if (!isInternetAvailable) {
+                    Toast.makeText(context, "No hay conexión a internet", Toast.LENGTH_SHORT).show();
                 }
-                else if(inventario.isEmpty()){
-                    Toast.makeText(context, "Ingrese inventario", Toast.LENGTH_SHORT).show();
-                    return;
+                if (!isGpsEnabled) {
+                    Toast.makeText(context, "El GPS no está activado", Toast.LENGTH_SHORT).show();
                 }
-                else if(pedido.isEmpty()){
-                    Toast.makeText(context, "Ingrese pedido", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                // No se cumple la condición, no se elimina el elemento
             }
-            //itemClickListener.onItemClick(getProductAdapterPosition());
-            //textInputListener.onTextInputClicked(nombre, stock);
-            //ProductAdapter.this.removeItem(getAdapterPosition());
         }
     }
     public interface itemClickListener {
@@ -181,7 +191,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public interface TextInputListener {
-        void onTextInputClicked(String id,String nombre, String inventario, String pedido, String img);
+        void onTextInputClicked(String cod_ref,String id,String nombre, String inventario, String pedido, String img);
+    }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+        return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+    }
+
+    private boolean isGpsEnabled() {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
 }

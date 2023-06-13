@@ -61,7 +61,7 @@ public class SummaryActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 // Acciones a realizar cuando se hace clic en un elemento
                 //Toast.makeText(SummaryActivity.this, SumaryArrayList.get(position).getTienda(), Toast.LENGTH_SHORT).show();
-                showAlertDialog(SumaryArrayList.get(position).getId(), SumaryArrayList.get(position).getProducto(), SumaryArrayList.get(position).getInventario(), SumaryArrayList.get(position).getPedido());
+                showAlertDialog(SumaryArrayList.get(position).getId(), SumaryArrayList.get(position).getTienda(),SumaryArrayList.get(position).getProducto(), SumaryArrayList.get(position).getInventario(), SumaryArrayList.get(position).getPedido());
             }
         });
 
@@ -72,16 +72,17 @@ public class SummaryActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        FloatingActionButton btn1 = findViewById(R.id.btn1_update);
+        FloatingActionButton btn1 = findViewById(R.id.update_btn);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                retrieveData(url);
+                Toast.makeText(SummaryActivity.this, "Actualizando...", Toast.LENGTH_SHORT).show();
+               recreate();
             }
         });
     }
-    private void showAlertDialog(String id, String nombre,String inv, String ped) {
+    private void showAlertDialog(String id, String tienda,String nombre,String inv, String ped) {
         //Toast.makeText(SummaryActivity.this, id +" "+ nombre, Toast.LENGTH_SHORT).show();
         AlertDialog.Builder builder = new AlertDialog.Builder(SummaryActivity.this);
 
@@ -126,6 +127,7 @@ public class SummaryActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String inventarioValue = inventario.getText().toString();
                 String pedidoValue = pedido.getText().toString();
+
                 // Lógica para guardar los cambios realizados en el elemento seleccionado
 
                 if(pedidoValue.isEmpty()){
@@ -136,7 +138,7 @@ public class SummaryActivity extends AppCompatActivity {
                     inventarioValue = inv;
                 }
 
-                actualizar_reporte(id,inventarioValue,pedidoValue);
+                actualizar_reporte(id,tienda,nombre,inventarioValue,pedidoValue);
             }
         });
 
@@ -173,8 +175,8 @@ public class SummaryActivity extends AppCompatActivity {
                                     String pedido = object.getString("pedido");
                                     String fecha_string = object.getString("fecha");
 
-                                    Log.d("Retrival ", img + " " + id + " " + tienda + " " + producto + " " + inventario + " " + pedido + " " + fecha_string);
-                                    summary = new Summary(img, id, tienda+"/"+sucursal, producto, inventario, pedido, fecha_string);
+                                    //Log.d("Retrival ", img + " " + id + " " + tienda + " " + producto + " " + inventario + " " + pedido + " " + fecha_string);
+                                    summary = new Summary(img, id,tienda+" / "+sucursal, producto, inventario, pedido, fecha_string);
                                     SumaryArrayList.add(summary);
                                 }
                                 summaryAdapter.notifyDataSetChanged(); // Notificar cambios en el adaptador después de agregar los elementos
@@ -194,7 +196,8 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
 
-    public void actualizar_reporte(String id, String inventario, String pedido) {
+    public void actualizar_reporte(String id, String sucursal,String producto,String inventario, String pedido) {
+        Log.d("los datos", id + " " + sucursal + " " + producto + " " + inventario + " " + pedido);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Actualizando....");
@@ -218,6 +221,8 @@ public class SummaryActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id);
+                params.put("sucursal", sucursal);
+                params.put("producto", producto);
                 params.put("inventario", inventario);
                 params.put("pedido", pedido);
                 return params;
