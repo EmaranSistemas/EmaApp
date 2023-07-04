@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setBackground(null);
         bottomNavigationView.setOnItemSelectedListener(item -> {
 
+
             /*
             switch (item.getItemId()) {
                 case R.id.home:
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.library:
                     replaceFragment(new LibraryFragment());
                     break;
-            }*/
+            }
+            */
 
             return true;
         });

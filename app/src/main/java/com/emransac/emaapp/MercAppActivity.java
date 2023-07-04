@@ -296,7 +296,4 @@ public class MercAppActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
     }
-
-
-
 }
